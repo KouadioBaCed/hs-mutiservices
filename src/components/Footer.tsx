@@ -117,6 +117,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href={`tel:${siteConfig.phoneRaw2}`} className="flex items-center gap-3 text-white/60 transition-colors hover:text-white">
+                  <Phone className="size-4 text-brand-red" /> {siteConfig.phoneDisplay2}
+                </a>
+              </li>
+              <li>
                 <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/60 transition-colors hover:text-white">
                   <MessageCircle className="size-4 text-brand-red" /> WhatsApp
                 </a>
