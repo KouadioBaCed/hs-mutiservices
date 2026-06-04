@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VH Multiservices — Kit Communication</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Playfair+Display:wght@700;900&family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #1B4FA8;
+    --bleu-fonce: #0D2D6B;
+    --rouge: #C8181A;
+    --rouge-vif: #E82020;
+    --blanc: #FFFFFF;
+    --gris-clair: #F4F6FA;
+    --gris: #AABBCC;
+    --or: #D4A844;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #0a0e1a;
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header {
+    background: linear-gradient(135deg, var(--bleu-fonce) 0%, #0a1628 50%, #1a0a0a 100%);
+    text-align: center;
+    padding: 60px 20px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(27,79,168,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(200,24,26,0.2) 0%, transparent 60%);
+    animation: pulseGlow 6s ease-in-out infinite alternate;
+  }
+  @keyframes pulseGlow {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.1); opacity: 1; }
+  }
+  .page-header h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(28px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, var(--bleu) 0%, #fff 50%, var(--rouge) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-header p {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+    text-transform: uppercase;
+  }
+  .section-divider {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--bleu), var(--rouge), transparent);
+    margin: 0 auto;
+    width: 60%;
+    position: relative;
+    z-index: 1;
+    margin-top: 20px;
+  }
+
+  /* ===== SECTION LABELS ===== */
+  .section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--rouge);
+    margin-bottom: 8px;
+  }
+  .section-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+  }
+
+  /* ===== CARTE DE VISITE ===== */
+  .cards-grid {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Recto */
+  .card-recto {
+    width: 380px;
+    height: 220px;
+    background: linear-gradient(135deg, var(--bleu-fonce) 0%, #1c3d8a 60%, #0a1f50 100%);
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 28px;
+    cursor: default;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-recto:hover { transform: translateY(-6px) rotateX(2deg); box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+
+  /* Diagonal accent */
+  .card-recto::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(135deg, var(--rouge) 0%, #900 100%);
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+  .card-recto::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rouge), var(--bleu), var(--rouge));
+  }
+
+  .card-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+  }
+  .card-logo-box {
+    width: 46px;
+    height: 46px;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--bleu-fonce);
+  }
+  .card-brand {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .card-brand span {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+  }
+
+  .card-info {
+    position: relative;
+    z-index: 2;
+  }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2px;
+  }
+  .card-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--rouge);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .card-contacts {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .card-contact-item {
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .card-contact-item .icon {
+    font-size: 11px;
+  }
+
+  .card-slogan-band {
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+    z-index: 2;
+  }
+  .card-slogan-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+  }
+
+  /* Verso */
+  .card-verso {
+    width: 380px;
+    height: 220px;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    background: #F0F4FA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-verso:hover { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+
+  .card-verso::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--bleu), var(--rouge));
+  }
+  .card-verso-inner {
+    text-align: center;
+    z-index: 2;
+    position: relative;
+  }
+  .card-verso-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 60px;
+    font-weight: 900;
+    color: var(--bleu-fonce);
+    line-height: 1;
+    position: relative;
+  }
+  .card-verso-logo span {
+    color: var(--rouge);
+  }
+  .card-verso-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--bleu-fonce);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .card-verso-slogan {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(0,0,0,0.3);
+    margin-top: 10px;
+  }
+  .card-verso-stripe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--bleu), var(--rouge));
+  }
+  .verso-bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 10% 90%, rgba(27,79,168,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 90% 10%, rgba(200,24,26,0.06) 0%, transparent 50%);
+  }
+
+  /* ===== FLYER ===== */
+  .flyer-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  .flyer {
+    width: min(500px, 100%);
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .flyer-header {
+    background: linear-gradient(135deg, var(--bleu-fonce), var(--bleu));
+    padding: 40px 36px 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .flyer-header::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    background: var(--rouge);
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+  .flyer-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: -40px;
+    width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.04;
+  }
+  .flyer-top-band {
+    background: var(--rouge);
+    height: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  .flyer-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 28px;
+  }
+  .flyer-logo-box {
+    width: 56px;
+    height: 56px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    color: var(--bleu-fonce);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .flyer-brand-name {
+    font-family: 'Oswald', sans-serif;
+    color: white;
+  }
+  .flyer-brand-name .vh { font-size: 22px; font-weight: 700; letter-spacing: 2px; display: block; }
+  .flyer-brand-name .multi { font-size: 11px; letter-spacing: 5px; opacity: 0.7; }
+
+  .flyer-tagline {
+    position: relative;
+    z-index: 1;
+  }
+  .flyer-tagline h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .flyer-tagline h2 em {
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+  }
+  .flyer-tagline p {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--rouge);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .flyer-body {
+    padding: 32px 36px;
+    background: white;
+  }
+
+  .flyer-intro {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 28px;
+    border-left: 3px solid var(--bleu);
+    padding-left: 14px;
+  }
+
+  .flyer-services-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rouge);
+    margin-bottom: 14px;
+  }
+  .flyer-services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .flyer-service-item {
+    background: var(--gris-clair);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--bleu-fonce);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 3px solid var(--bleu);
+  }
+  .flyer-service-item .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rouge);
+    flex-shrink: 0;
+  }
+
+  .flyer-values {
+    background: linear-gradient(135deg, var(--bleu-fonce), #0D2D6B);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .flyer-value-tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: white;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .flyer-footer {
+    background: var(--gris-clair);
+    padding: 20px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid rgba(0,0,0,0.06);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .flyer-footer-contact {
+    font-size: 12px;
+    color: var(--bleu-fonce);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flyer-footer-slogan {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(0,0,0,0.4);
+  }
+
+  /* ===== VISUEL RÉSEAUX SOCIAUX ===== */
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  /* Post carré */
+  .social-post {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, var(--bleu-fonce) 0%, #1a3a80 100%);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    cursor: default;
+    transition: transform 0.3s ease;
+  }
+  .social-post:hover { transform: scale(1.02); }
+  .social-post::before {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    right: -80px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,24,26,0.2) 0%, transparent 70%);
+  }
+  .social-post-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+  }
+  .social-badge {
+    background: var(--rouge);
+    color: white;
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .social-logo-mini {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: white;
+  }
+  .social-post-main {
+    position: relative;
+    z-index: 2;
+  }
+  .social-post-main h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .social-post-main p {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+  .social-post-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+  .social-contact {
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 600;
+  }
+  .social-slogan {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+  }
+  .social-divider {
+    height: 2px;
+    background: linear-gradient(90deg, var(--rouge), transparent);
+    margin: 14px 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Post cover FB */
+  .fb-cover {
+    aspect-ratio: 16/6;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(120deg, var(--bleu-fonce) 0%, #0a1628 60%, #1a0505 100%);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    padding: 30px 50px;
+    gap: 40px;
+    transition: transform 0.3s ease;
+  }
+  .fb-cover:hover { transform: scale(1.01); }
+  .fb-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 80% 50%, rgba(200,24,26,0.15) 0%, transparent 60%);
+  }
+  .fb-cover-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(40px, 6vw, 70px);
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .fb-cover-logo span { color: var(--rouge); }
+  .fb-cover-sep {
+    width: 3px;
+    height: 70px;
+    background: linear-gradient(to bottom, var(--rouge), var(--bleu));
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .fb-cover-text {
+    position: relative;
+    z-index: 1;
+  }
+  .fb-cover-text h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(14px, 2.5vw, 22px);
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .fb-cover-text p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(12px, 1.8vw, 16px);
+    color: rgba(255,255,255,0.5);
+  }
+  .fb-cover-contact {
+    margin-left: auto;
+    position: relative;
+    z-index: 1;
+    text-align: right;
+  }
+  .fb-cover-contact .num {
+    font-size: clamp(11px, 1.5vw, 14px);
+    font-weight: 700;
+    color: white;
+  }
+  .fb-cover-contact .wha {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  /* ===== CALENDRIER DE BUREAU ===== */
+  .calendar-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  .calendar {
+    width: min(540px, 100%);
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .cal-header {
+    background: linear-gradient(135deg, var(--bleu-fonce), var(--bleu));
+    padding: 28px 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cal-header::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: var(--rouge);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .cal-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+  }
+  .cal-brand {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+  }
+  .cal-brand strong {
+    display: block;
+    font-size: 18px;
+    color: white;
+    letter-spacing: 2px;
+  }
+  .cal-month-year {
+    text-align: right;
+    position: relative;
+    z-index: 1;
+  }
+  .cal-month {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .cal-year {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 3px;
+  }
+
+  .cal-body {
+    padding: 24px 28px 20px;
+  }
+  .cal-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 10px;
+  }
+  .cal-day-label {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--bleu);
+    text-transform: uppercase;
+    padding: 6px 0;
+  }
+  .cal-day-label.weekend { color: var(--rouge); }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .cal-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    border-radius: 6px;
+    cursor: default;
+    transition: all 0.2s;
+  }
+  .cal-cell:hover { background: var(--gris-clair); }
+  .cal-cell.empty { color: transparent; cursor: default; }
+  .cal-cell.weekend { color: var(--rouge); }
+  .cal-cell.today {
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-fonce));
+    color: white;
+    box-shadow: 0 4px 14px rgba(27,79,168,0.4);
+  }
+  .cal-cell.ferie {
+    background: rgba(200,24,26,0.08);
+    color: var(--rouge);
+    font-weight: 700;
+  }
+
+  .cal-footer {
+    background: var(--gris-clair);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .cal-footer-contact {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--bleu-fonce);
+  }
+  .cal-footer-contact span {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: #888;
+    letter-spacing: 1px;
+  }
+  .cal-slogan {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(0,0,0,0.35);
+  }
+  .cal-top-stripe {
+    height: 5px;
+    background: linear-gradient(90deg, var(--bleu), var(--rouge));
+  }
+
+  /* ===== CHARTE COULEURS ===== */
+  .charte-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+  }
+  .charte-swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .charte-color {
+    height: 80px;
+  }
+  .charte-info {
+    background: rgba(255,255,255,0.05);
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .charte-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2px;
+  }
+  .charte-hex {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+    font-family: monospace;
+  }
+
+  /* Labels de sections intermédiaires */
+  .section-sep {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    margin: 0 20px;
+  }
+
+  /* Annotations */
+  .annotation {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 4px 10px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 14px;
+  }
+
+  /* Print hint */
+  .print-note {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    padding: 30px;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== EN-TÊTE ===== -->
+<div class="page-header">
+  <h1>VH Multiservices</h1>
+  <p>Dossier Créatif — Kit Communication Complet</p>
+  <div class="section-divider"></div>
+</div>
+
+<!-- ===== CARTE DE VISITE ===== -->
+<div class="section">
+  <div class="section-title">01 — Support Print</div>
+  <div class="section-name">Carte de Visite</div>
+
+  <div class="annotation">Format 8,5 × 5,5 cm — Recto / Verso</div>
+
+  <div class="cards-grid">
+
+    <!-- RECTO -->
+    <div>
+      <div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:10px;">▸ Recto</div>
+      <div class="card-recto">
+        <div class="card-logo-area">
+          <div class="card-logo-box">VH</div>
+          <div class="card-brand">
+            <span>VH Multiservices</span>
+            SARL — Côte d'Ivoire
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-name">Victorine HAIDARA</div>
+          <div class="card-title">Directrice Gérante</div>
+          <div class="card-contacts">
+            <div class="card-contact-item"><span class="icon">📞</span> +225 01 0474 5555</div>
+            <div class="card-contact-item"><span class="icon">💬</span> WhatsApp</div>
+          </div>
+        </div>
+        <div class="card-slogan-band">
+          <div class="card-slogan-text">« Votre vision,<br>ma mission »</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERSO -->
+    <div>
+      <div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:10px;">▸ Verso</div>
+      <div class="card-verso">
+        <div class="verso-bg-pattern"></div>
+        <div class="card-verso-stripe"></div>
+        <div class="card-verso-inner">
+          <div class="card-verso-logo">V<span>H</span></div>
+          <div class="card-verso-sub">Multiservices</div>
+          <div class="card-verso-slogan">« Votre vision, ma mission »</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-sep"></div>
+
+<!-- ===== FLYER ===== -->
+<div class="section">
+  <div class="section-title">02 — Support Print</div>
+  <div class="section-name">Flyer A5 — Présentation Entreprise</div>
+  <div class="annotation">Format A5 — 148 × 210 mm — Recto</div>
+
+  <div class="flyer-wrap">
+    <div class="flyer">
+      <div class="flyer-header">
+        <div class="flyer-top-band"></div>
+        <div class="flyer-logo-area">
+          <div class="flyer-logo-box">VH</div>
+          <div class="flyer-brand-name">
+            <span class="vh">VH Multiservices</span>
+            <span class="multi">SARL — Côte d'Ivoire</span>
+          </div>
+        </div>
+        <div class="flyer-tagline">
+          <h2>Des services <em>rapides,<br>fiables</em> & professionnels</h2>
+          <p>Votre vision, ma mission</p>
+        </div>
+      </div>
+
+      <div class="flyer-body">
+        <p class="flyer-intro">
+          VH Multiservices met à votre disposition une gamme complète de prestations adaptées aux particuliers et aux entreprises. Notre engagement : qualité, réactivité et satisfaction client.
+        </p>
+
+        <div class="flyer-services-title">Nos domaines d'intervention</div>
+        <div class="flyer-services-grid">
+          <div class="flyer-service-item"><span class="dot"></span> Nettoyage & Entretien</div>
+          <div class="flyer-service-item"><span class="dot"></span> Maintenance & Réparation</div>
+          <div class="flyer-service-item"><span class="dot"></span> Commerce Général</div>
+          <div class="flyer-service-item"><span class="dot"></span> Intermédiation Commerciale</div>
+          <div class="flyer-service-item"><span class="dot"></span> Prestation de Services</div>
+          <div class="flyer-service-item"><span class="dot"></span> Distribution & Vente</div>
+        </div>
+
+        <div class="flyer-values">
+          <span class="flyer-value-tag">Professionnalisme</span>
+          <span class="flyer-value-tag">Intégrité</span>
+          <span class="flyer-value-tag">Réactivité</span>
+          <span class="flyer-value-tag">Qualité</span>
+          <span class="flyer-value-tag">Satisfaction Client</span>
+        </div>
+      </div>
+
+      <div class="flyer-footer">
+        <div class="flyer-footer-contact">
+          📞 / 💬 +225 01 0474 5555
+        </div>
+        <div class="flyer-footer-slogan">« Votre vision, ma mission »</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-sep"></div>
+
+<!-- ===== VISUELS RÉSEAUX SOCIAUX ===== -->
+<div class="section">
+  <div class="section-title">03 — Digital & Réseaux Sociaux</div>
+  <div class="section-name">Visuels Numériques</div>
+
+  <!-- Cover Facebook / LinkedIn -->
+  <div class="annotation" style="margin-bottom:20px;">Photo de couverture — Facebook / LinkedIn (851 × 315 px)</div>
+  <div class="fb-cover" style="margin-bottom:40px;">
+    <div class="fb-cover-logo">V<span>H</span></div>
+    <div class="fb-cover-sep"></div>
+    <div class="fb-cover-text">
+      <h2>VH Multiservices</h2>
+      <p>Votre vision, ma mission</p>
+    </div>
+    <div class="fb-cover-contact">
+      <div class="num">+225 01 0474 5555</div>
+      <div class="wha">📞 Appel & WhatsApp</div>
+    </div>
+  </div>
+
+  <!-- Posts carrés -->
+  <div class="annotation" style="margin-bottom:20px;">Posts carrés — Instagram / Facebook (1080 × 1080 px)</div>
+  <div class="social-grid">
+
+    <!-- Post Services -->
+    <div class="social-post">
+      <div class="social-post-top">
+        <div class="social-badge">Services</div>
+        <div class="social-logo-mini">VH</div>
+      </div>
+      <div class="social-post-main">
+        <div class="social-divider"></div>
+        <h3>Nettoyage,<br>Maintenance &<br>Commerce</h3>
+        <p>Des solutions multiservices pour particuliers et entreprises en Côte d'Ivoire.</p>
+      </div>
+      <div class="social-post-bottom">
+        <div class="social-contact">+225 01 0474 5555</div>
+        <div class="social-slogan">Votre vision, ma mission</div>
+      </div>
+    </div>
+
+    <!-- Post Contact -->
+    <div class="social-post" style="background: linear-gradient(135deg, #7a0c0c 0%, var(--rouge) 100%);">
+      <div class="social-post-top">
+        <div class="social-badge" style="background:var(--bleu);">Contact</div>
+        <div class="social-logo-mini">VH</div>
+      </div>
+      <div class="social-post-main">
+        <div class="social-divider" style="background:linear-gradient(90deg, rgba(255,255,255,0.3), transparent);"></div>
+        <h3>Contactez-<br>nous<br>dès aujourd'hui</h3>
+        <p>Appel & WhatsApp disponibles pour vos demandes de devis ou de services.</p>
+      </div>
+      <div class="social-post-bottom">
+        <div class="social-contact">+225 01 0474 5555</div>
+        <div class="social-slogan">Victorine HAIDARA</div>
+      </div>
+    </div>
+
+    <!-- Post Vision -->
+    <div class="social-post" style="background: linear-gradient(135deg, #0a1a0a, #1a3a1a, #0a2010);">
+      <div class="social-post-top">
+        <div class="social-badge" style="background: #2d8a2d;">Vision</div>
+        <div class="social-logo-mini">VH</div>
+      </div>
+      <div class="social-post-main">
+        <div class="social-divider" style="background:linear-gradient(90deg, #2d8a2d, transparent);"></div>
+        <h3>Référence<br>des<br>Multiservices</h3>
+        <p>Devenir l'entreprise de référence en Côte d'Ivoire grâce à des prestations innovantes.</p>
+      </div>
+      <div class="social-post-bottom">
+        <div class="social-contact">VH Multiservices</div>
+        <div class="social-slogan">Votre vision, ma mission</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-sep"></div>
+
+<!-- ===== CALENDRIER DE BUREAU ===== -->
+<div class="section">
+  <div class="section-title">04 — Support Print</div>
+  <div class="section-name">Calendrier de Bureau — Juin 2026</div>
+  <div class="annotation">Format A5 paysage — Impression recto — Papier cartonné</div>
+
+  <div class="calendar-wrap">
+    <div class="calendar">
+      <div class="cal-top-stripe"></div>
+      <div class="cal-header">
+        <div class="cal-header-top">
+          <div class="cal-brand">
+            VH
+            <strong>Multiservices</strong>
+          </div>
+          <div class="cal-month-year">
+            <div class="cal-month">JUIN</div>
+            <div class="cal-year">2026</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cal-body">
+        <div class="cal-days-header">
+          <div class="cal-day-label">Lun</div>
+          <div class="cal-day-label">Mar</div>
+          <div class="cal-day-label">Mer</div>
+          <div class="cal-day-label">Jeu</div>
+          <div class="cal-day-label">Ven</div>
+          <div class="cal-day-label weekend">Sam</div>
+          <div class="cal-day-label weekend">Dim</div>
+        </div>
+        <div class="cal-grid">
+          <!-- Semaine 1 (commence un lundi = 1 juin) -->
+          <div class="cal-cell today">1</div>
+          <div class="cal-cell">2</div>
+          <div class="cal-cell">3</div>
+          <div class="cal-cell">4</div>
+          <div class="cal-cell">5</div>
+          <div class="cal-cell weekend">6</div>
+          <div class="cal-cell weekend">7</div>
+          <!-- Semaine 2 -->
+          <div class="cal-cell">8</div>
+          <div class="cal-cell">9</div>
+          <div class="cal-cell">10</div>
+          <div class="cal-cell">11</div>
+          <div class="cal-cell">12</div>
+          <div class="cal-cell weekend">13</div>
+          <div class="cal-cell weekend">14</div>
+          <!-- Semaine 3 -->
+          <div class="cal-cell">15</div>
+          <div class="cal-cell">16</div>
+          <div class="cal-cell">17</div>
+          <div class="cal-cell">18</div>
+          <div class="cal-cell">19</div>
+          <div class="cal-cell weekend">20</div>
+          <div class="cal-cell weekend">21</div>
+          <!-- Semaine 4 -->
+          <div class="cal-cell">22</div>
+          <div class="cal-cell">23</div>
+          <div class="cal-cell">24</div>
+          <div class="cal-cell">25</div>
+          <div class="cal-cell">26</div>
+          <div class="cal-cell weekend">27</div>
+          <div class="cal-cell weekend">28</div>
+          <!-- Semaine 5 -->
+          <div class="cal-cell">29</div>
+          <div class="cal-cell">30</div>
+          <div class="cal-cell empty"></div>
+          <div class="cal-cell empty"></div>
+          <div class="cal-cell empty"></div>
+          <div class="cal-cell empty"></div>
+          <div class="cal-cell empty"></div>
+        </div>
+      </div>
+
+      <div class="cal-footer">
+        <div class="cal-footer-contact">
+          +225 01 0474 5555
+          <span>Appel & WhatsApp — Victorine HAIDARA</span>
+        </div>
+        <div class="cal-slogan">« Votre vision, ma mission »</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-sep"></div>
+
+<!-- ===== CHARTE GRAPHIQUE ===== -->
+<div class="section">
+  <div class="section-title">05 — Identité Visuelle</div>
+  <div class="section-name">Charte Graphique — Couleurs & Typographies</div>
+
+  <div class="charte-grid">
+    <div class="charte-swatch">
+      <div class="charte-color" style="background:#0D2D6B;"></div>
+      <div class="charte-info">
+        <div class="charte-name">Bleu Nuit</div>
+        <div class="charte-hex">#0D2D6B</div>
+      </div>
+    </div>
+    <div class="charte-swatch">
+      <div class="charte-color" style="background:#1B4FA8;"></div>
+      <div class="charte-info">
+        <div class="charte-name">Bleu Principal</div>
+        <div class="charte-hex">#1B4FA8</div>
+      </div>
+    </div>
+    <div class="charte-swatch">
+      <div class="charte-color" style="background:#C8181A;"></div>
+      <div class="charte-info">
+        <div class="charte-name">Rouge Accent</div>
+        <div class="charte-hex">#C8181A</div>
+      </div>
+    </div>
+    <div class="charte-swatch">
+      <div class="charte-color" style="background:#F4F6FA;"></div>
+      <div class="charte-info">
+        <div class="charte-name">Blanc Cassé</div>
+        <div class="charte-hex">#F4F6FA</div>
+      </div>
+    </div>
+    <div class="charte-swatch">
+      <div class="charte-color" style="background:#FFFFFF; border:1px solid rgba(255,255,255,0.05);"></div>
+      <div class="charte-info">
+        <div class="charte-name">Blanc Pur</div>
+        <div class="charte-hex">#FFFFFF</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:36px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:24px 28px;">
+    <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:18px;">Typographies utilisées</div>
+    <div style="margin-bottom:16px;">
+      <span style="font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;color:white;letter-spacing:2px;">OSWALD</span>
+      <span style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-left:14px;">— Titres, logos, labels</span>
+    </div>
+    <div style="margin-bottom:16px;">
+      <span style="font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:rgba(255,255,255,0.8);">Playfair Display</span>
+      <span style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-left:14px;">— Slogans, accroches</span>
+    </div>
+    <div>
+      <span style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:400;color:rgba(255,255,255,0.6);">Montserrat</span>
+      <span style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-left:14px;">— Corps de texte</span>
+    </div>
+  </div>
+</div>
+
+<div class="print-note">
+  VH Multiservices — Kit Communication © 2026 · Tous supports prêts à l'impression et à la publication numérique
+</div>
+
+</body>
+</html>
