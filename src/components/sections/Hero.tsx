@@ -3,14 +3,21 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, MessageCircle, ShieldCheck, Clock, Award } from "lucide-react";
+import {
+  ArrowRight,
+  MessageCircle,
+  Snowflake,
+  Wrench,
+  ShieldCheck,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { siteConfig, whatsappLink } from "@/lib/site";
+import { SplitUnit } from "@/components/visuals/SplitUnit";
 
 const highlights = [
-  { icon: ShieldCheck, label: "Prestations fiables" },
-  { icon: Clock, label: "Intervention rapide" },
-  { icon: Award, label: "Qualité garantie" },
+  { icon: Snowflake, label: "Splits toutes marques" },
+  { icon: Wrench, label: "Installation pro" },
+  { icon: ShieldCheck, label: "Garantie & SAV" },
 ];
 
 export function Hero() {
@@ -59,7 +66,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-slate-600 shadow-sm"
           >
             <span className="size-2 animate-pulse rounded-full bg-brand-red" />
-            {siteConfig.legalForm} · {siteConfig.country}
+            Spécialiste climatisation · {siteConfig.country}
           </motion.span>
 
           <motion.h1
@@ -68,8 +75,8 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.08 }}
             className="mt-6 font-heading text-4xl font-bold uppercase leading-[1.05] tracking-tight text-brand-navy sm:text-5xl md:text-6xl"
           >
-            Votre partenaire{" "}
-            <span className="text-tricolor">multiservices</span> de confiance
+            Vente de <span className="text-tricolor">climatiseurs split</span> de
+            tout genre
           </motion.h1>
 
           <motion.p
@@ -78,8 +85,9 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.16 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg"
           >
-            {siteConfig.name} accompagne particuliers et entreprises avec des
-            prestations fiables, rapides et professionnelles.
+            {siteConfig.name}, votre partenaire multiservices, fournit, installe
+            et entretient tous types de splits — pour particuliers, commerces et
+            entreprises en {siteConfig.country}.
           </motion.p>
 
           <motion.p
@@ -98,13 +106,13 @@ export function Hero() {
             className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center"
           >
             <Button asChild size="lg" variant="accent">
-              <a href="#contact">
-                Demander un devis <ArrowRight className="size-4" />
+              <a href="#climatisation">
+                Voir nos climatiseurs <ArrowRight className="size-4" />
               </a>
             </Button>
             <Button asChild size="lg" variant="outline">
               <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="size-4" /> Contact WhatsApp
+                <MessageCircle className="size-4" /> Devis WhatsApp
               </a>
             </Button>
           </motion.div>
@@ -144,8 +152,17 @@ export function Hero() {
               <div className="absolute -bottom-20 -left-16 size-56 rounded-full bg-brand-blue/25 blur-2xl" />
 
               <div className="relative z-10 flex items-center justify-between">
-                <span className="font-heading text-sm uppercase tracking-[0.3em] text-white/60">
-                  VH Multiservices
+                <span className="flex items-center gap-2 font-heading text-sm uppercase tracking-[0.25em] text-white/70">
+                  <span className="relative block h-7 w-16">
+                    <Image
+                      src="/logo.png"
+                      alt="VH Multiservices"
+                      fill
+                      sizes="64px"
+                      className="object-contain object-left brightness-0 invert"
+                    />
+                  </span>
+                  Climatisation
                 </span>
                 <span className="rounded-full bg-brand-red px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
                   Pro
@@ -153,26 +170,16 @@ export function Hero() {
               </div>
 
               <div className="relative z-10 my-6 flex flex-1 items-center justify-center">
-                <motion.div
-                  animate={{ y: [0, -12, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative h-40 w-full max-w-[280px] rounded-2xl bg-white/95 p-6 shadow-2xl"
-                >
-                  <Image
-                    src="/logo.png"
-                    alt="VH Multiservices"
-                    fill
-                    sizes="280px"
-                    className="object-contain p-4"
-                  />
-                </motion.div>
+                <div className="w-full max-w-[300px]">
+                  <SplitUnit />
+                </div>
               </div>
 
               <div className="relative z-10 grid grid-cols-3 gap-3 text-center">
                 {[
-                  { k: "+10", l: "Ans" },
-                  { k: "500+", l: "Clients" },
-                  { k: "24/7", l: "Support" },
+                  { k: "Toutes", l: "Marques" },
+                  { k: "9-48k", l: "BTU" },
+                  { k: "Pose", l: "Incluse" },
                 ].map((s) => (
                   <div
                     key={s.l}

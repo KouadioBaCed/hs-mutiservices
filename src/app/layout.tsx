@@ -26,7 +26,7 @@ const playfair = Playfair_Display({
 });
 
 const title =
-  "VH Multiservices | Services, Maintenance, Nettoyage et Commerce Général en Côte d'Ivoire";
+  "VH Multiservices | Vente & installation de climatiseurs split en Côte d'Ivoire";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -40,6 +40,11 @@ export const metadata: Metadata = {
   generator: "Next.js",
   keywords: [
     "VH Multiservices",
+    "vente de climatiseurs Abidjan",
+    "climatiseur split Côte d'Ivoire",
+    "installation climatisation Abidjan",
+    "split mural cassette gainable",
+    "vente et pose de climatiseur",
     "multiservices Côte d'Ivoire",
     "nettoyage professionnel Abidjan",
     "maintenance et réparation",
@@ -117,6 +122,8 @@ const jsonLd = {
     closes: "18:00",
   },
   makesOffer: [
+    "Vente et installation de climatiseurs split",
+    "Maintenance et entretien de climatisation",
     "Prestation de services divers",
     "Nettoyage professionnel",
     "Maintenance et réparation",

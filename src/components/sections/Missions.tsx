@@ -7,12 +7,18 @@ import {
   Wrench,
   ShoppingCart,
   Handshake,
+  Snowflake,
   ArrowUpRight,
 } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 
 const services = [
+  {
+    icon: Snowflake,
+    title: "Vente & installation de climatiseurs split",
+    text: "Notre cœur de métier : splits muraux, cassettes, gainables… toutes marques et puissances, posés par nos techniciens.",
+  },
   {
     icon: Briefcase,
     title: "Prestation de services divers",

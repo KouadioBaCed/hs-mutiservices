@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { siteConfig, whatsappLink } from "@/lib/site";
 
 const navLinks = [
+  { label: "Climatisation", href: "#climatisation" },
   { label: "À propos", href: "#a-propos" },
   { label: "Services", href: "#services" },
   { label: "Valeurs", href: "#valeurs" },

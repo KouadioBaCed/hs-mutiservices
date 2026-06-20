@@ -21,7 +21,7 @@ export const siteConfig = {
   country: "Côte d'Ivoire",
   url: "https://www.vhmultiservices.ci",
   description:
-    "VH Multiservices accompagne particuliers et entreprises avec des services professionnels de maintenance, nettoyage, commerce général et prestations diverses en Côte d'Ivoire.",
+    "VH Multiservices, spécialiste de la vente et l'installation de climatiseurs split de tout genre (muraux, cassettes, gainables…) en Côte d'Ivoire. Également maintenance, nettoyage, commerce général et prestations diverses pour particuliers et entreprises.",
   social: {
     facebook: "https://www.facebook.com/share/1Cq1bDDoqe/?mibextid=wwXIfr",
     linkedin: "https://www.linkedin.com/in/victorine-haidara-59b85a112?utm_source=share_via&utm_content=profile&utm_medium=member_ios",

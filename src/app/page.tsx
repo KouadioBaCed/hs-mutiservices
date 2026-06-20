@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Hero } from "@/components/sections/Hero";
+import { Splits } from "@/components/sections/Splits";
 import { About } from "@/components/sections/About";
 import { Missions } from "@/components/sections/Missions";
 import { Values } from "@/components/sections/Values";
@@ -18,6 +19,7 @@ export default function Home() {
       <Header />
       <main className="overflow-x-hidden">
         <Hero />
+        <Splits />
         <About />
         <Missions />
         <Values />
