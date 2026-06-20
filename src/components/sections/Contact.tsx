@@ -8,7 +8,7 @@ import {
   MapPin,
   MessageCircle,
   Send,
-  CheckCircle2,
+  CheckCircle2,  
   Loader2,
   ChevronDown,
   User,
